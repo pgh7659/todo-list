@@ -1,0 +1,20 @@
+.unchecked {
+    opacity: 0.3;
+}
+
+.color-item {
+    height: 50px;
+    width: 50px;
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 10px;
+    opacity: 0.5;
+}
+
+.color-item:hover {
+    opacity: 1;
+}
+
+.selected, .color-item:active {
+    opacity: 1;
+}

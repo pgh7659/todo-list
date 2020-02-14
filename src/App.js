@@ -2,15 +2,27 @@ import React, { Component } from 'react';
 import TodoListTemplate from './components/TodoListTemplate';
 import Form from './components/Form';
 import TodoItemList from './components/TodoItemList';
+import Palette from './components/Palette';
 
 class App extends Component {
   id = 1;
+  colors = ['#343a40', '#f03e3e', '#12b886', '#228ae6'];
+
   state = {
     input: '',
-    todos: []
+    todos: [],
+    color: this.colors[0]
   }
 
-  // 삭제
+  // 색상 변경 이벤트
+  handleChangeColor = (color) => {
+    console.log(color);
+    this.setState({
+      color : color
+    });
+  }
+
+  // 목록 삭제
   handleRemove = (id) => {
     const { todos } = this.state;
 
@@ -22,7 +34,7 @@ class App extends Component {
     });
   }
 
-  // check toggle
+  // checkbox toggle
   handleToggle = (id) => {
     const {todos} = this.state;
 
@@ -65,10 +77,10 @@ class App extends Component {
 
   // input 내용 등록 시
   handleCreate = () => {
-    const { input, todos } = this.state;
+    const { input, todos, color } = this.state;
     this.setState({
       input: '',
-      todos : [...todos, {id: this.id++, text: input, checked: false}]
+      todos : [...todos, {id: this.id++, text: input, checked: false, color : color}]
     });
   }
 
@@ -80,20 +92,21 @@ class App extends Component {
   }
 
   render() {
-    const { input, todos } = this.state;
-    const { handleChange, handleCreate, handlekeyPress, handleToggle, handleRemove } = this;
+    const { input, todos, color } = this.state;
+    const { handleChange, handleCreate, handlekeyPress, handleToggle, handleRemove, handleChangeColor } = this;
     console.log('App.js[render] => ' + todos);
     return (
       <div>
         <TodoListTemplate form={
           <Form
             value={input}
+            color={color}
             onKeyPress={handlekeyPress}
             onChange={handleChange}
             onCreate={handleCreate}
           />
         }>
-
+          <Palette colors={this.colors} onClick={handleChangeColor}/>
           <TodoItemList todos={todos} onToggle={handleToggle} onRemove={handleRemove}/>
 
         </TodoListTemplate>
